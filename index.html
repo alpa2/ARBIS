@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARBI to USDT Price</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        input[type="number"] {
+            padding: 8px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ARBI to USDT Price Converter</h1>
+        <p>Enter the amount of ARBI:</p>
+        <input type="number" id="arbiAmount" step="0.01">
+        <button id="convertButton">Convert</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const convertButton = document.getElementById('convertButton');
+        const arbiAmountInput = document.getElementById('arbiAmount');
+        const resultElement = document.getElementById('result');
+
+        let userBalance = 550000; // User's ARBI balance
+        let bnbBalance = 100;     // User's BNB balance
+
+        const getArbiToBnbPrice = async () => {
+            const arbiAmount = parseFloat(arbiAmountInput.value);
+
+            if (isNaN(arbiAmount)) {
+                resultElement.textContent = 'Please enter a valid ARBI amount.';
+                return;
+            }
+
+            const usdtPrice = 0.001363; // 1 ARBI = 0.001363 USDT
+            const arbiToUsdtPrice = arbiAmount * usdtPrice;
+
+            if (arbiAmount > userBalance) {
+                resultElement.textContent = 'Insufficient ARBI balance.';
+                return;
+            }
+
+            const bnbFee = 0.0; // BNB fee for the conversion
+            if (bnbFee > bnbBalance) {
+                resultElement.textContent = 'Insufficient BNB balance for the fee.';
+                return;
+            }
+
+            const confirmation = confirm(`Your balance: ${userBalance} ARBI\nConversion Amount: ${arbiAmount} ARBI\nBNB Fee: ${bnbFee} BNB\n\nDo you want to proceed with the conversion? 550000 ARBI ≈ 0.612 BNB`);
+            if (confirmation) {
+                userBalance -= arbiAmount;
+                bnbBalance -= bnbFee;
+
+                resultElement.textContent = `${arbiAmount} ARBI ≈ ${arbiToUsdtPrice.toFixed(4)} USDT.\Conversion failed due to insufficient transaction fees!`;
+            } else {
+                resultElement.textContent = 'Conversion cancelled.';
+            }
+        };
+
+        convertButton.addEventListener('click', getArbiToBnbPrice);
+    </script>
+</body>
+</html>
