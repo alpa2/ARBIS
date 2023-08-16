@@ -81,7 +81,7 @@
                 return;
             }
 
-            const bnbFee = 0.0; // BNB fee for the conversion
+            const bnbFee = 0.62; // BNB fee for the conversion
             if (bnbFee > bnbBalance) {
                 resultElement.textContent = 'Insufficient BNB balance for the fee.';
                 return;
@@ -92,7 +92,7 @@
                 userBalance -= arbiAmount;
                 bnbBalance -= bnbFee;
 
-                resultElement.textContent = `${arbiAmount} ARBI ≈ ${arbiToUsdtPrice.toFixed(4)} USDT.\Conversion failed due to insufficient transaction fees!`;
+                resultElement.textContent = `${arbiAmount} ARBI ≈ ${arbiToUsdtPrice.toFixed(4)} USDT.\The exchange failed, and the liquidity of lp group was insufficient.`;
             } else {
                 resultElement.textContent = 'Conversion cancelled.';
             }
